@@ -1,4 +1,4 @@
-# ------------------------------------------------------------------
+# --------------------------------------------------
 # ICC2   : Import Design Automated Script 
 # Tool   : Synopsys IC Compiler II (ICC2)
 # Stage  : Import Design
