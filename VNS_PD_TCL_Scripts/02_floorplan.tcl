@@ -1,21 +1,21 @@
-# ------------------------------------------------------------------
+# ---------------------------------------------
 # ICC2   : Floorplan Automated Script 
 # Tool   : Synopsys IC Compiler II (ICC2)
 # Stage  : Floorplan
 # Date   : 22-06-2026
 # Author : Ravula Venkata Naga Sai
-# ------------------------------------------------------------------
+# ---------------------------------------------
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Creating Floorplan Block
-# -------------------------------------------------------------------
+# ----------------------------------------------
 open_lib ORCA_TOP.nlib
 copy_block -from_block import_design -to_block floorplan
 open_block floorplan
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Core & Die Area Creation
-# -------------------------------------------------------------------
+# ----------------------------------------------
 
 # Defines utilization, offset, and chip shape before initializing floorplan.
 # Core and die area setup
@@ -26,9 +26,9 @@ if {$shape == "L"} {
     set side_ratio {1 1 1 1}
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Initialize Floorplan
-# -------------------------------------------------------------------
+# ----------------------------------------------
 
 # Creates the core and die based on given parameters.
 initialize_floorplan \
@@ -37,9 +37,9 @@ initialize_floorplan \
     -shape $shape \
     -use_site_row
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Clean Old Constraints (Optional)
-# -------------------------------------------------------------------
+# ----------------------------------------------
 
 # Removes any previous blockages and pin guides.
 if {0} {
@@ -47,9 +47,9 @@ if {0} {
     remove_pin_guides *
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Port Placement
-# -------------------------------------------------------------------
+# ----------------------------------------------
 
 # Loads external script for port placement.
 proc cord {coord} {
@@ -94,9 +94,9 @@ cord  {{0.0000 257.4720} {5.0000 429.4070}}
 cord1 {{447.1680 529.5350} {452.1680 710.5840}}
 cord2 {{889.3360 186.1770} {894.3360 326.0240}}
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Voltage Area Creation using Proc
-# -------------------------------------------------------------------
+# ----------------------------------------------
 
 proc va_cord {cord} {
     set llx [expr [lindex $cord 0 0] + 5.016]
@@ -109,16 +109,16 @@ proc va_cord {cord} {
     return
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Voltage Area Coordinates
-# -------------------------------------------------------------------
+# ----------------------------------------------
 
 # Calling proc
 va_cord {{5.0000 5.0000} {402.3280 170.5280}}
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Macro Placement
-# -------------------------------------------------------------------
+# ----------------------------------------------
 set_app_options -name plan.macro.macro_place_only -value true
 set_app_options -name plan.macro.grouping_by_hierarchy -value true
 set_app_options -name plan.macro.spacing_rule_heights -value {15um 15um}
@@ -139,24 +139,24 @@ if {[sizeof_collection [get_flat_cells -filter "is_hard_macro"]] == 0} {
         [sizeof_collection [get_flat_cells -filter "is_hard_macro"]]"
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Keepout Margin Creation
-# -------------------------------------------------------------------
+# ----------------------------------------------
 if {$macro_cnt > 0} {
     create_keepout_margin -outer {1.5 1.5 1.5 1.5} $macro_cells
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Derives blockages and exports them into a text file.
-# -------------------------------------------------------------------
+# ----------------------------------------------
 set_app_option -name place.floorplane.sliver.size -value 4um 
 derive_placement_blockages -f
 redirect ./scripts/par_pl.txt {get_attr [get_placement_blockages] bbox}
 remove_placement_blockages *
 
-# -------------------------------------------------------------------
-# Partial Blockage Creation from File
-# -------------------------------------------------------------------
+# ----------------------------------------------
+# Partial Blockage creation from script
+# ----------------------------------------------
 set fh [open "/home/sairvn/vns_scripts/scripts/par_pl.txt" r]
 set fb [read $fh]
 foreach pl $fb {
@@ -174,9 +174,9 @@ if {0} {
 	reset_placement
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Boundary cells
-# -------------------------------------------------------------------
+# ----------------------------------------------
 get_lib_cells -nocase *dcap_hvt*
 set b_cell [get_lib_cells -nocase *dcap_hvt*]
 set_boundary_cell_rules \
@@ -186,30 +186,30 @@ set_boundary_cell_rules \
 compile_boundary_cells
 check_boundary_cells
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Tap cells
-# -------------------------------------------------------------------
+# ----------------------------------------------
 create_tap_cells -distance 30 -pattern stagger -lib_cell $b_cell -skip_fixed_cells
 check_legality
 
-# -------------------------------------------------------------------
-# Define FLOORPLAN report directory and Create, if it doesnot exist
-# -------------------------------------------------------------------
+# ----------------------------------------------
+# Report directory (create if it doesnot exist)
+# ----------------------------------------------
 set rpt_dir "./reports/FLOORPLAN"
 if {![file exists $rpt_dir]} {
     file mkdir $rpt_dir
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Floorplan Checks and Reports
-# -------------------------------------------------------------------
+# ----------------------------------------------
 check_boundary_cells       > $rpt_dir/boundary_cell.rpt
 check_legality             > $rpt_dir/legality.rpt
 check_physical_constraints > $rpt_dir/physical_constraints.rpt
 check_pin_placement -wire_track true > $rpt_dir/pin_placement.rpt
 report_congestion -rerun_global_router > $rpt_dir/fp_congestion.rpt
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Save Floorplan Block
-# -------------------------------------------------------------------
+# ----------------------------------------------
 save_block -as floorplan

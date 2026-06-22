@@ -1,38 +1,41 @@
+# ----------------------------------------------
 # ICC2   : Power Planning Automated Script
 # Tool   : Synopsys IC Compiler II (ICC2)
 # Stage  : Power Planning
 # Date   : 22-06-2026
+# Author : Ravula Venkata Naga Sai
+# ----------------------------------------------
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Sanity check: power nets
-# -------------------------------------------------------------------
+# ----------------------------------------------
 set pwr_nets [get_nets -quiet {VDD VSS VDDH}]
 if {[sizeof_collection $pwr_nets] == 0} {
     puts "ERROR: Power nets not found. UPF may not be loaded."
     return
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Open floorplan block and create powerplan block
-# -------------------------------------------------------------------
+# ----------------------------------------------
 open_lib ORCA_TOP.nlib
 copy_block -from_block floorplan -to_block powerplan
 open_block powerplan
 
-# -------------------------------------------------------------------
-# Define POWERPLAN report directory and Create, if it doesnot exist
-# -------------------------------------------------------------------
+# ----------------------------------------------
+# Report directory (create if it doesnot exist)
+# ----------------------------------------------
 set rpt_dir "./reports/POWERPLAN"
 if {![file exists $rpt_dir]} {
     file mkdir $rpt_dir
 }
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # create_pg_pattern : Physical aspects spacing pitch offset direction
 # create_pg_strategy : How to use pattern in design
 # set Via rule
 # compile strategy and via rule : physical stuctures are created
-# -------------------------------------------------------------------
+# ----------------------------------------------
 
 remove_pg_strategies -all
 remove_pg_patterns -all
@@ -56,7 +59,8 @@ set hm(risc_core) [get_flat_cells -filter "is_hard_macro" I_RISC_CORE/*]
 # macros which belong to PD_ORCA_TOP power domain
 set hm(top) [remove_from_collection $all_macros $hm(risc_core)]
 
-######################## Create pattern, strategy for higher straps M7, M8 #######################
+# ----------------------------------------------
+############## Create pattern, strategy for higher straps M7, M8 #############
 
 create_pg_mesh_pattern P_top_two \
   -layers { \
@@ -71,7 +75,7 @@ create_pg_mesh_pattern P_top_two \
 # for core VDD, VSS
 set_pg_strategy S_default_vddvss \
   -core { \
-    -pattern { \
+    -pattern { \ 
       {name: P_top_two} {nets:{VSS VDD}} {offset_start: {0 0}} \
     } \
     -blockage { \
@@ -93,7 +97,7 @@ set_pg_strategy S_va_vddh -voltage_areas PD_RISC_CORE \
 
 compile_pg -strategies {S_va_vddh S_default_vddvss}
 
-######################## Create pattern , strategy , via rule for lower strap M2 ########################
+############# Create pattern, strategy, via rule for lower strap M2 ##########
 
 create_pg_mesh_pattern P_m2_triple \
     -layers { \
@@ -129,16 +133,16 @@ set_pg_strategy_via_rule S_via_m2_m7 \
         {{strategies: {S_default_vddvss S_va_vddh}} {layers: {M7}} } {via_master: {default}} \
     }
 
-######################## Compile the Strategies and via rules ########################
+##################### Compile the Strategies and via rules ###################
 
 compile_pg -strategies {S_va_vddh S_m2_vddh}
 compile_pg -strategies {S_default_vddvss S_m2_vddvss} -via_rule {S_via_m2_m7}
 
-######################## Build rings around the macros then connect them ########################
+############### Build rings around the macros then connect them ##############
 
 suppress_message PGR-599
 
-######################## Create pattern, strategy , via_rule for macro rings ########################
+############# Create pattern, strategy, via_rule for macro rings #############
 
 create_pg_ring_pattern MACRO_RING_VDD_PATTERN \
     -horizontal_layer M5 \
@@ -169,7 +173,7 @@ compile_pg -strategies \
     {MACRO_RING_VDD_STRAGEY MACRO_RING_VDDH_STRAGEY} \
     -via_rule S_ring_vias
 
-######################## create pattern, strategies and compile for macropins ########################
+########### create pattern, strategies and compile for macropins ############
 
 create_pg_macro_conn_pattern P_HM_pin \
     -pin_conn_type scattered_pin \
@@ -182,7 +186,7 @@ set_pg_strategy S_HM_risc_pins \
     -pattern { {pattern: P_HM_pin} {nets: {VSS VDD}} }
 compile_pg -strategies {S_HM_top_pins S_HM_risc_pins}
 
-######################## Build the standard cell rails ########################
+##################### Build the standard cell rails #######################
 
 create_pg_std_cell_conn_pattern P_std_cell_rail
 set_pg_strategy S_std_cell_rail_VSS_VDD \
@@ -199,14 +203,14 @@ set_pg_strategy_via_rule S_via_stdcellrail \
 compile_pg -strategies {$_std_cell_rail_VSS_VDD $std_cell_rail_VDDH} \
     -via_rule {$via_stdcellrail}
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Power Connectivity & DRC checks
-# -------------------------------------------------------------------
+# ----------------------------------------------
 check_pg_connectivity -check_std_cell_pins none > $rpt_dir pg_connect.rpt
 check_pg_missing_vias  > $rpt_dir pg_miss_vias.rpt
 check_pg_drc -ignore_std_cells > $rpt_dir pg_drc.rpt
 
-# -------------------------------------------------------------------
+# ----------------------------------------------
 # Save the Powerplan Block
-# -------------------------------------------------------------------
+# ----------------------------------------------
 save_block -as powerplan
