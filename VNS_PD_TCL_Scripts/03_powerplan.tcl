@@ -23,14 +23,6 @@ copy_block -from_block floorplan -to_block powerplan
 open_block powerplan
 
 # ----------------------------------------------
-# Report directory (create if it doesnot exist)
-# ----------------------------------------------
-set rpt_dir "./reports/POWERPLAN"
-if {![file exists $rpt_dir]} {
-    file mkdir $rpt_dir
-}
-
-# ----------------------------------------------
 # create_pg_pattern : Physical aspects spacing pitch offset direction
 # create_pg_strategy : How to use pattern in design
 # set Via rule
@@ -204,13 +196,21 @@ compile_pg -strategies {$_std_cell_rail_VSS_VDD $std_cell_rail_VDDH} \
     -via_rule {$via_stdcellrail}
 
 # ----------------------------------------------
-# Power Connectivity & DRC checks
+# Report directory (create if it doesnot exist)
 # ----------------------------------------------
-check_pg_connectivity -check_std_cell_pins none > $rpt_dir pg_connect.rpt
-check_pg_missing_vias  > $rpt_dir pg_miss_vias.rpt
-check_pg_drc -ignore_std_cells > $rpt_dir pg_drc.rpt
+set rpt_dir "./reports/POWERPLAN"
+if {![file exists $rpt_dir]} {
+    file mkdir $rpt_dir
+}
 
 # ----------------------------------------------
-# Save the Powerplan Block
+# Power Connectivity, DRC Checks and Reports
+# ----------------------------------------------
+check_pg_connectivity -check_std_cell_pins none > $rpt_dir/pg_connectivity.rpt
+check_pg_missing_vias  > $rpt_dir/pg_missing_vias.rpt
+check_pg_drc -ignore_std_cells > $rpt_dir/pg_drc.rpt
+
+# ----------------------------------------------
+# Save Powerplan Block
 # ----------------------------------------------
 save_block -as powerplan

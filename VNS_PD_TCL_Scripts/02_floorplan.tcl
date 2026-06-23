@@ -161,7 +161,7 @@ remove_placement_blockages *
 # ----------------------------------------------
 # Partial Blockage creation from script
 # ----------------------------------------------
-set fh [open "/home/sairvn/vns_scripts/scripts/par_pl.txt" r]
+set fh [open "/home/vns/vns_scripts/scripts/par_pl.txt" r]
 set fb [read $fh]
 foreach pl $fb {
     create_placement_blockage -type partial -boundary $pl

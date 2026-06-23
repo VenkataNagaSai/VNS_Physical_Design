@@ -74,7 +74,7 @@ set_app_options -name opt.common.user_instance_name_prefix -value route_opt_
 # ---------------------------------------------
 # Read antenna rules
 # ---------------------------------------------
-Source /home/sairvn/PHYSICAL_DESIGN/ICC2/ORCA_TOP/ref/tech/saed32nm_ant_1p9m.tcl
+Source /home/vns/PHYSICAL_DESIGN/ICC2/ORCA_TOP/ref/tech/saed32nm_ant_1p9m.tcl
 
 # ---------------------------------------------
 # Perform routing

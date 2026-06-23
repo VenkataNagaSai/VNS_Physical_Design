@@ -9,7 +9,7 @@
 # ---------------------------------------------
 # Search Path
 # ---------------------------------------------
-set search_path "$search_path /home/sairvn/PHYSICAL_DESIGN/ICC2/ORCA_TOP/ref/CLIBs/CLIBs"
+set search_path "$search_path /home/vns/PHYSICAL_DESIGN/ICC2/ORCA_TOP/ref/CLIBs/CLIBs"
 
 # ---------------------------------------------
 # Reference Libraries
