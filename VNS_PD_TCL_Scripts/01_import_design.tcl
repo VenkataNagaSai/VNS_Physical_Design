@@ -60,13 +60,14 @@ if {![file exists $rpt_dir]} {
 # ---------------------------------------------
 # Import Design Checks and Reports
 # ---------------------------------------------
-check_netlist > $rpt_dir/check_net.rpt
-report_global_timing > $rpt_dir/global_timing.rpt
-check_mv_design > $rpt_dir/mv_design.rpt
-report_design_mismatch > $rpt_dir/design_miss.rpt
-report_ref_libs > $rpt_dir/ref_lib.rpt
-report_qor > $rpt_dir/qor.rpt
-check_scan_chain > $rpt_dir/scan_chain_info.rpt
+set stage import_design
+check_netlist > $rpt_dir/check_netlist_$stage.rpt
+report_global_timing > $rpt_dir/fp_global_timing_$stage.rpt
+check_mv_design > $rpt_dir/mv_design_$stage.rpt
+report_design_mismatch > $rpt_dir/design_mismatch_$stage.rpt
+report_ref_libs > $rpt_dir/ref_lib_$stage.rpt
+report_qor > $rpt_dir/qor_$stage.rpt
+check_scan_chain > $rpt_dir/scan_chain_info_$stage.rpt
 
 # ---------------------------------------------
 # Save Import Design Block

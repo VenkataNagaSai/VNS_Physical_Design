@@ -1,0 +1,1 @@
+magnet_placement [get_cells I_CONTEXT_MEM/I_CONTEXT_RAM_3_3]

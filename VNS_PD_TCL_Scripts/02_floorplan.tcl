@@ -48,7 +48,7 @@ if {0} {
 }
 
 # ----------------------------------------------
-# Port Placement
+# Port Placement using Proc
 # ----------------------------------------------
 
 # Loads external script for port placement.
@@ -89,10 +89,18 @@ proc cord2 {coord} {
     return
 }
 
-# Calling the proc
+# Calling Port Placement Proc with Coordinates as Arguments
 cord  {{0.0000 257.4720} {5.0000 429.4070}}
 cord1 {{447.1680 529.5350} {452.1680 710.5840}}
 cord2 {{889.3360 186.1770} {894.3360 326.0240}}
+
+# ----------------------------------------------
+# Remove Existing Voltage Areas (Optional)
+# ----------------------------------------------
+
+if {0} {
+    remove_voltage_area *
+}
 
 # ----------------------------------------------
 # Voltage Area Creation using Proc
@@ -109,11 +117,7 @@ proc va_cord {cord} {
     return
 }
 
-# ----------------------------------------------
-# Voltage Area Coordinates
-# ----------------------------------------------
-
-# Calling proc
+# Calling Voltage Area Proc with Coordinates as Arguments
 va_cord {{5.0000 5.0000} {402.3280 170.5280}}
 
 # ----------------------------------------------
@@ -203,11 +207,12 @@ if {![file exists $rpt_dir]} {
 # ----------------------------------------------
 # Floorplan Checks and Reports
 # ----------------------------------------------
-check_boundary_cells       > $rpt_dir/boundary_cell.rpt
-check_legality             > $rpt_dir/legality.rpt
-check_physical_constraints > $rpt_dir/physical_constraints.rpt
-check_pin_placement -wire_track true > $rpt_dir/pin_placement.rpt
-report_congestion -rerun_global_router > $rpt_dir/fp_congestion.rpt
+set stage fp
+check_boundary_cells       > $rpt_dir/boundary_cell_$stage.rpt
+check_legality             > $rpt_dir/legality_$stage.rpt
+check_physical_constraints > $rpt_dir/physical_constraints_$stage.rpt
+check_pin_placement -wire_track true > $rpt_dir/pin_placement_$stage.rpt
+report_congestion -rerun_global_router > $rpt_dir/congestion_$stage.rpt
 
 # ----------------------------------------------
 # Save Floorplan Block
