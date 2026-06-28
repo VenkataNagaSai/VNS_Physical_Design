@@ -129,7 +129,7 @@ Implement a robust and DRC-clean power delivery network by creating power meshes
 - Missing via report
 - Power DRC report
 
-📁 script location: vns_pd_scripts/power.tcl`
+📁 script location: `vns_pd_scripts/power.tcl`
 
 ## 📐 Stage 4: Placement 
 
@@ -179,7 +179,7 @@ Place and optimize standard cells while meeting timing, congestion, and physical
 - Final optimization placement block  
 - Detailed placement and QoR reports  
 
-📁 script location: vns_pd_scripts/place.tcl`
+📁 script location: `vns_pd_scripts/place.tcl`
 
 ## ⏱️ Stage 5: Clock Tree Synthesis (CTS)
 
@@ -232,7 +232,7 @@ Build and optimize a balanced and low-skew clock distribution network that meets
 - Final CTS optimized block (`final_clock_opt_done`)
 - Comprehensive CTS QoR reports
 
-📁 script location: vns_pd_scripts/cts.tcl`
+📁 script location: `vns_pd_scripts/cts.tcl`
 
 ## 🧵 Stage 6: Routing 
 
@@ -299,7 +299,7 @@ Perform timing-driven and signal-integrity-aware routing to achieve a fully conn
 - PG connectivity reports
 - LVS report (zero errors)
 
-📁 script location: vns_pd_scripts/route.tcl`
+📁 script location: `vns_pd_scripts/route.tcl`
 
 ## 🛠️ Stage 7: Timing Optimization & ECO Fixes 
 
@@ -406,7 +406,7 @@ Defines physical placement regions to control cell distribution.
 - Electrical violation reports
 - Incrementally legalized design block
 
-📁 script location:  vns_pd_scripts/hook/`
+📁 script location:  `vns_pd_scripts/hook/`
 ├── `group_path.tcl`
 ├── `magnet_placement.tcl`
 ├── `bound_creation.tcl`
