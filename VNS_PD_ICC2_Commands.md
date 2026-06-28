@@ -4,35 +4,35 @@ These PD ICC2 commands are most commonly used during implementation, debugging, 
 
 ## Table of Contents
 
-- [1. Design Initialization](#1-design-initialization)
-- [2. Library Commands](#2-library-commands)
-- [3. Object Query Commands](#3-object-query-commands)
-- [4. Attribute Commands](#4-attribute-commands)
-- [5. Floorplan](#5-floorplan)
-- [6. Powerplan](#6-powerplan)
-- [7. Placement](#7-placement)
-- [8. High Fanout Optimization](#8-high-fanout-optimization)
-- [9. CTS](#9-cts)
-- [10. Route](#10-route)
-- [11. Timing Commands](#11-timing-commands)
-- [12. QoR Reports](#12-qor-reports)
-- [13. Congestion Reports](#13-congestion-reports)
-- [14. DRC Commands](#14-drc-commands)
-- [15. ECO Commands](#15-eco-commands)
-- [16. Useful Reports](#16-useful-reports)
-- [17. Collections](#17-collections)
-- [18. Filter Commands](#18-filter-commands)
-- [19. Database Navigation Commands](#19-database-navigation-commands)
-- [20. GUI Commands](#20-gui-commands)
-- [21. Common Debug Commands](#21-common-debug-commands)
-- [22. Routing Rule Commands](#22-routing-rule-commands)
-- [23. NDR Commands](#23-ndr-commands)
-- [24. Common Query Commands](#24-common-query-commands)
-- [25. Frequently Used Attribute Queries](#25-frequently-used-attribute-queries)
-- [26. Most Frequently Used ICC2 Commands](#26-most-frequently-used-icc2-commands)
+- [Design Initialization](#design-initialization)
+- [Library Commands](#library-commands)
+- [Object Query Commands](#object-query-commands)
+- [Attribute Commands](#attribute-commands)
+- [Floorplan](#floorplan)
+- [Powerplan](#powerplan)
+- [Placement](#placement)
+- [High Fanout Optimization](#high-fanout-optimization)
+- [CTS](#cts)
+- [Route](#route)
+- [Timing Commands](#timing-commands)
+- [QoR Reports](#qor-reports)
+- [Congestion Reports](#congestion-reports)
+- [DRC Commands](#drc-commands)
+- [ECO Commands](#eco-commands)
+- [Useful Reports](#useful-reports)
+- [Collections](#collections)
+- [Filter Commands](#filter-commands)
+- [Database Navigation Commands](#database-navigation-commands)
+- [GUI Commands](#gui-commands)
+- [Common Debug Commands](#common-debug-commands)
+- [Routing Rule Commands](#routing-rule-commands)
+- [NDR Commands](#ndr-commands)
+- [Common Query Commands](#common-query-commands)
+- [Frequently Used Attribute Queries](#frequently-used-attribute-queries)
+- [Most Frequently Used ICC2 Commands](#most-frequently-used-icc2-commands)
 
 
-## 1. Design Initialization
+## Design Initialization
 
 ```tcl
 read_verilog design.v
@@ -52,7 +52,7 @@ copy_block
 * Open design database
 * Save design database
 
-## 2. Library Commands
+## Library Commands
 
 ```tcl
 get_libs
@@ -68,7 +68,7 @@ get_lib_cells *BUF*
 get_lib_cells *INV*
 ```
 
-## 3. Object Query Commands
+## Object Query Commands
 
 ### Cells
 
@@ -114,7 +114,7 @@ get_ports
 get_clocks
 ```
 
-## 4. Attribute Commands
+## Attribute Commands
 
 Very frequently used.
 
@@ -131,7 +131,7 @@ get_attribute [get_cells U1] physical_status
 get_attribute [get_nets clk] net_type
 ```
 
-## 5. Floorplan
+## Floorplan
 
 ```tcl
 initialize_floorplan
@@ -150,7 +150,7 @@ check_floorplan
 report_utilization
 ```
 
-## 6. Powerplan
+## Powerplan
 
 ```tcl
 create_pg_ring
@@ -166,7 +166,7 @@ check_pg_connectivity
 report_pg
 ```
 
-## 7. Placement
+## Placement
 
 ### Placement Main Commands
 
@@ -175,7 +175,7 @@ place_opt
 legalize_placement
 ```
 
-### Individual Placement stage Commands
+### Individual Placement Stage Commands
 
 ```tcl
 place_opt -from initial_place
@@ -193,14 +193,14 @@ report_congestion
 report_utilization
 ```
 
-## 8. High Fanout Optimization
+## High Fanout Optimization
 
 ```tcl
 report_net_fanout
 all_high_fanout
 ```
 
-## 9. CTS
+## CTS
 
 ```tcl
 clock_opt
@@ -229,7 +229,7 @@ report_clock_timing -type skew
 
 These are the most commonly used CTS debugging commands. 
 
-## 10. Route
+## Route
 
 ### Global Route
 
@@ -262,7 +262,7 @@ report_route_status
 report_routing_rules
 ```
 
-## 11. Timing Commands
+## Timing Commands
 
 Most important command
 
@@ -282,7 +282,7 @@ report_timing -transition_time
 
 Timing reports help identify setup/hold violations and optimization opportunities. 
 
-## 12. QoR Reports
+## QoR Reports
 
 ```tcl
 report_qor
@@ -293,14 +293,14 @@ report_power
 report_area
 ```
 
-## 13. Congestion Reports
+## Congestion Reports
 
 ```tcl
 report_congestion
 report_congestion -grid
 ```
 
-## 14. DRC Commands
+## DRC Commands
 
 ```tcl
 check_routes
@@ -309,7 +309,7 @@ check_design
 check_physical_constraints
 ```
 
-## 15. ECO Commands
+## ECO Commands
 
 ```tcl
 eco_opt
@@ -320,7 +320,7 @@ size_cell
 change_link
 ```
 
-## 16. Useful Reports
+## Useful Reports
 
 ```tcl
 report_area
@@ -339,7 +339,7 @@ report_timing
 report_utilization
 ```
 
-## 17. Collections
+## Collections
 
 ### To count objects
 
@@ -353,7 +353,7 @@ sizeof_collection
 sizeof_collection [get_cells]
 ```
 
-## 18. Filter Commands
+## Filter Commands
 
 ```tcl
 get_cells -filter "is_sequential==true"
@@ -361,7 +361,7 @@ get_cells -filter "is_hard_macro==true"
 get_cells -filter "physical_status==fixed"
 ```
 
-## 19. Database Navigation Commands
+## Database Navigation Commands
 
 ```tcl
 all_inputs
@@ -372,7 +372,7 @@ current_design
 current_block
 ```
 
-## 20. GUI Commands
+## GUI Commands
 
 ```tcl
 start_gui
@@ -382,7 +382,7 @@ change_selection
 highlight_objects
 ```
 
-## 21. Common Debug Commands
+## Common Debug Commands
 
 ### Locate a cell
 
@@ -402,7 +402,7 @@ change_selection [get_nets clk]
 change_selection [get_pins U123/A]
 ```
 
-## 22. Routing Rule Commands
+## Routing Rule Commands
 
 ```tcl
 create_routing_rule
@@ -410,7 +410,7 @@ set_clock_routing_rules
 report_routing_rules
 ```
 
-## 23. NDR Commands
+## NDR Commands
 
 ```tcl
 create_routing_rule
@@ -419,7 +419,7 @@ remove_routing_rules
 report_routing_rules
 ```
 
-## 24. Common Query Commands
+## Common Query Commands
 
 ```tcl
 get_cells
@@ -433,7 +433,7 @@ get_ports
 get_vias
 ```
 
-## 25. Frequently Used Attribute Queries
+## Frequently Used Attribute Queries
 
 ```tcl
 area
@@ -448,7 +448,7 @@ pin_count
 width
 ```
 
-## 26. Most Frequently Used ICC2 Commands
+## Most Frequently Used ICC2 Commands
  
 * `change_selection`
 * `check_clock_trees`
