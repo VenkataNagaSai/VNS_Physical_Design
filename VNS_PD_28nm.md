@@ -2,7 +2,7 @@
 
 <a id="top"></a>
 
-## 📑 Table of Contents
+## 📑 Contents
 
 - [Project Overview](#project-overview)
 - [Project Objectives](#project-objectives)
@@ -116,7 +116,7 @@ Create a clean ICC2 environment and import the design with all required dependen
 
 📁 **Script Location:** [`VNS_PD_Scripts/import_design.tcl`](VNS_PD_Scripts/import_design.tcl)
 
-<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Contents</a>)</p>
 
 ## Stage 2: Floorplan 
 
@@ -150,7 +150,7 @@ Define the physical boundaries of the design by creating the core and die area, 
   
 📁 **Script Location:** [`VNS_PD_Scripts/fp.tcl`](VNS_PD_Scripts/fp.tcl)
 
-<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Contents</a>)</p>
 
 ## Stage 3: Powerplan 
 
@@ -193,7 +193,7 @@ Implement a robust and DRC-clean power delivery network by creating power meshes
 
 📁 **Script Location:** [`VNS_PD_Scripts/power.tcl`](VNS_PD_Scripts/power.tcl)
 
-<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Contents</a>)</p>
 
 ## Stage 4: Placement 
 
@@ -245,7 +245,7 @@ Place and optimize standard cells while meeting timing, congestion, and physical
 
 📁 **Script Location:** [`VNS_PD_Scripts/place.tcl`](VNS_PD_Scripts/place.tcl)
 
-<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Contents</a>)</p>
 
 ## Stage 5: Clock Tree Synthesis (CTS)
 
@@ -300,7 +300,7 @@ Build and optimize a balanced and low-skew clock distribution network that meets
 
 📁 **Script Location:** [`VNS_PD_Scripts/cts.tcl`](VNS_PD_Scripts/cts.tcl)
 
-<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Contents</a>)</p>
 
 # Stage 6: Routing 
 
@@ -369,7 +369,7 @@ Perform timing-driven and signal-integrity-aware routing to achieve a fully conn
 
 📁 **Script Location:** [`VNS_PD_Scripts/route.tcl`](VNS_PD_Scripts/route.tcl)
 
-<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Contents</a>)</p>
 
 # Stage 7: Timing Optimization and ECO Fixes 
 
@@ -500,6 +500,6 @@ This project is intended **strictly for learning and demonstration purposes**.
 All scripts are **generic and reusable**.  
 Tool-generated databases and proprietary data are **intentionally excluded**.
 
-<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Contents</a>)</p>
 
 
