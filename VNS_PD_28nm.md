@@ -1,4 +1,4 @@
-# Physical Design Implementation (Netlist → GDSII) and Automation of a Single Core 32 Bit RISC Processor on 28nm Technology
+# Physical Design Implementation (Netlist to GDSII) and Automation of a Single Core 32 Bit RISC Processor on 28nm Technology
 
 <a id="top"></a>
 
@@ -89,7 +89,7 @@ The project is organized to reflect **production-level Physical Design practices
 | RC Extraction | Synopsys StarRC |
 | Technology Node | 28 nm |
 | Design Type | Multi-voltage ASIC block |
-| Flow | Netlist → GDSII |
+| Flow | Netlist to GDSII |
 | Scripting Language | TCL |
 
 ## Physical Design Flow (Stage-wise Automation)
@@ -101,7 +101,7 @@ Create a clean ICC2 environment and import the design with all required dependen
 
 ### Import Design Automated Tasks
 - Search path configuration  
-- Reference NDM libraries (RVT/ HVT/ LVT/ SRAM)  
+- Reference NDM libraries (RVT, HVT, LVT and SRAM)  
 - Working library creation  
 - Gate-level netlist import  
 - Design linking  
@@ -111,7 +111,7 @@ Create a clean ICC2 environment and import the design with all required dependen
 - Initial design sanity checks  
 
 ## Import Design Generated Outputs
-- Global Timing, Scan Chain, Design Mismatch, Multivolatge Design Report generation  
+- Global Timing, Scan Chain, Design Mismatch, Multi-volatge Design Report generation  
 - Import design block
 
 📁 **Script Location:** [`VNS_PD_Scripts/import_design.tcl`](VNS_PD_Scripts/import_design.tcl)
@@ -158,13 +158,13 @@ Define the physical boundaries of the design by creating the core and die area, 
 Implement a robust and DRC-clean power delivery network by creating power meshes, straps, rings, and standard cell rails to ensure reliable power integrity across all voltage domains.
 
 ### Powerplan Automated Tasks
-- Sanity check for power and ground nets (VDD / VSS / VDDH)
+- Sanity check for power and ground nets (VDD, VSS and VDDH)
 - Open floorplan database and create power planning block
 - Removal of existing PG strategies, patterns, regions, and routes
 - Power net connectivity update and validation
 - Definition of PG via master rules
 - Identification and grouping of hard macros by power domain
-- Creation of top-level power mesh on higher metal layers (M7 / M8)
+- Creation of top-level power mesh on higher metal layers (M7 and M8)
 - Power mesh strategy definition for core and voltage areas
 - Creation of lower metal power straps (M2)
 - Multi-layer PG strategy compilation with via rules
@@ -258,7 +258,7 @@ Build and optimize a balanced and low-skew clock distribution network that meets
 - Derivation of clock cell reference list
 - CTS cell control:
   - Exclude all library cells from CTS by default
-  - Enable only selected LVT/RVT buffers and inverters
+  - Enable only selected LVT and RVT buffers and inverters
 - Clock routing rule creation using non-default rules (NDR):
   - Double width and spacing
   - Controlled tapering
@@ -300,7 +300,7 @@ Build and optimize a balanced and low-skew clock distribution network that meets
 
 📁 **Script Location:** [`VNS_PD_Scripts/cts.tcl`](VNS_PD_Scripts/cts.tcl)
 
-#<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
 
 # Stage 6: Routing 
 
@@ -369,7 +369,7 @@ Perform timing-driven and signal-integrity-aware routing to achieve a fully conn
 
 📁 **Script Location:** [`VNS_PD_Scripts/route.tcl`](VNS_PD_Scripts/route.tcl)
 
-#<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
+<p align="right">(<a href="#top">⬆️ Back to Top</a>)</p>
 
 # Stage 7: Timing Optimization and ECO Fixes 
 
@@ -403,7 +403,7 @@ Logical classification of timing paths to enable focused optimization.
 - Timing analysis stages
 
 #### Magnet Placement
-Critical cells are pulled closer to reference objects (registers/macros) to reduce:
+Critical cells are pulled closer to reference objects (registers and macros) to reduce:
 - Wire length
 - Net delay
 - Timing violations
@@ -443,7 +443,7 @@ Defines physical placement regions to control cell distribution.
 
 #### Transition Violations
 - Automated VT swap:
-  - RVT / LVT → HVT
+  - RVT and LVT to HVT
 - Reduces slew violations without upsizing
 
 #### Capacitance Violations
