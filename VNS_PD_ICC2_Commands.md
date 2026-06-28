@@ -7,11 +7,6 @@ These PD ICC2 commands are most commonly used during implementation, debugging, 
 - [1. Design Initialization](#1-design-initialization)
 - [2. Library Commands](#2-library-commands)
 - [3. Object Query Commands](#3-object-query-commands)
-  - [Cells](#cells)
-  - [Pins](#pins)
-  - [Nets](#nets)
-  - [Ports](#ports)
-  - [Clocks](#clocks)
 - [4. Attribute Commands](#4-attribute-commands)
 - [5. Floorplan](#5-floorplan)
 - [6. Powerplan](#6-powerplan)
@@ -34,8 +29,7 @@ These PD ICC2 commands are most commonly used during implementation, debugging, 
 - [23. NDR Commands](#23-ndr-commands)
 - [24. Common Query Commands](#24-common-query-commands)
 - [25. Frequently Used Attribute Queries](#25-frequently-used-attribute-queries)
-- [26. Most Frequently Used ICC2 Commands in Daily Work](#26-most-frequently-used-icc2-commands-in-daily-work)
-- [Top 50 Important Commands to Memorize](#top-50-important-commands-to-memorize)
+- [26. Most Frequently Used ICC2 Commands](#26-most-frequently-used-icc2-commands)
 
 
 ## 1. Design Initialization
@@ -51,12 +45,12 @@ open_block
 copy_block
 ```
 
-### Purpose:
+### Purpose
 
 * Load design
 * Read constraints
 * Open design database
-* Save snapshots
+* Save design database
 
 ## 2. Library Commands
 
@@ -67,7 +61,7 @@ get_lib_pins
 report_lib
 ```
 
-### Useful Library Commands:
+### Useful Library Commands
 
 ```tcl
 get_lib_cells *BUF*
@@ -174,14 +168,14 @@ report_pg
 
 ## 7. Placement
 
-### Main commands
+### Placement Main Commands
 
 ```tcl
 place_opt
 legalize_placement
 ```
 
-### Individual stages of Placement
+### Individual Placement stage Commands
 
 ```tcl
 place_opt -from initial_place
@@ -329,20 +323,20 @@ change_link
 ## 16. Useful Reports
 
 ```tcl
-report_design
-report_cell
-report_net
-report_port
-report_pin
-report_power
 report_area
-report_clock_tree
-report_qor
-report_constraint
-report_utilization
-report_congestion
-report_timing
+report_cell
 report_clock_timing
+report_clock_tree
+report_congestion
+report_constraint
+report_design
+report_net
+report_pin
+report_port
+report_power
+report_qor
+report_timing
+report_utilization
 ```
 
 ## 17. Collections
@@ -429,106 +423,80 @@ report_routing_rules
 
 ```tcl
 get_cells
-get_nets
-get_ports
-get_pins
-get_lib_cells
-get_lib_pins
 get_clocks
 get_layers
+get_lib_cells
+get_lib_pins
+get_nets
+get_pins
+get_ports
 get_vias
 ```
 
 ## 25. Frequently Used Attribute Queries
 
 ```tcl
-bbox
-width
-height
 area
-physical_status
-is_sequential
-is_hard_macro
-is_soft_macro
+bbox
+height
 is_clock
+is_hard_macro
+is_sequential
+is_soft_macro
+physical_status
 pin_count
+width
 ```
 
-## 26. Most Frequently Used ICC2 Commands in Daily Work
-
-```tcl
-report_timing
-report_qor
-report_constraint
-report_clock_timing
-report_congestion
-report_utilization
-place_opt
-clock_opt
-route_opt
-check_legality
-check_routes
-report_area
-report_power
-get_cells
-get_pins
-get_nets
-get_attribute
-change_selection
-sizeof_collection
-report_clock_tree
-report_route_status
-```
-
-## Top 50 Important Commands to Memorize
-
-* `report_timing`
-* `report_qor`
-* `report_constraint`
-* `report_clock_timing`
-* `place_opt`
-* `clock_opt`
-* `route_opt`
-* `check_legality`
-* `check_routes`
-* `report_congestion`
-* `report_utilization`
-* `report_area`
-* `report_power`
-* `get_cells`
-* `get_pins`
-* `get_nets`
-* `get_ports`
-* `get_clocks`
-* `get_attribute`
-* `set_attribute`
+## 26. Most Frequently Used ICC2 Commands
+ 
 * `change_selection`
-* `sizeof_collection`
-* `report_clock_tree`
-* `report_route_status`
-* `report_routing_rules`
-* `legalize_placement`
 * `check_clock_trees`
-* `report_net_fanout`
-* `create_pg_ring`
-* `create_pg_mesh`
-* `compile_pg`
+* `check_legality`
 * `check_pg_connectivity`
+* `check_routes`
+* `clock_opt`
+* `compile_pg`
+* `create_keepout_margin`
+* `create_pg_mesh`
+* `create_pg_ring`
 * `create_placement_blockage`
 * `create_route_blockage`
-* `create_keepout_margin`
+* `create_routing_rule`
+* `eco_opt`
+* `get_attribute`
+* `get_cells`
+* `get_clocks`
+* `get_nets`
+* `get_pins`
+* `get_ports`
+* `highlight_objects`
 * `initialize_floorplan`
-* `report_floorplan`
-* `report_design`
+* `insert_buffer`
+* `legalize_placement`
+* `place_opt`
+* `report_area`
 * `report_cell`
+* `report_clock_timing`
+* `report_clock_tree`
+* `report_congestion`
+* `report_constraint`
+* `report_design`
+* `report_floorplan`
+* `report_global_timing`
+* `report_net_fanout`
 * `report_net`
 * `report_pin`
 * `report_port`
-* `report_global_timing`
-* `eco_opt`
-* `insert_buffer`
-* `size_cell`
-* `create_routing_rule`
+* `report_power`
+* `report_qor`
+* `report_route_status`
+* `report_routing_rules`
+* `report_timing`
+* `report_utilization`
+* `route_opt`
+* `set_attribute`
 * `set_clock_routing_rules`
-* `highlight_objects`
+* `size_cell`
+* `sizeof_collection`
 * `start_gui`
