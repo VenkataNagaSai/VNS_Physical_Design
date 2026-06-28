@@ -1,6 +1,6 @@
 # PD ICC2 Commands
 
-These ICC2 commands are most commonly used during implementation, debugging, timing closure. 
+These PD ICC2 commands are most commonly used during implementation, debugging, timing closure. 
 
 ## Table of Contents
 
@@ -133,9 +133,7 @@ set_attribute
 
 ```tcl
 get_attribute [get_cells U1] bbox
-
 get_attribute [get_cells U1] physical_status
-
 get_attribute [get_nets clk] net_type
 ```
 
@@ -143,17 +141,11 @@ get_attribute [get_nets clk] net_type
 
 ```tcl
 initialize_floorplan
-
 create_bounds
-
 create_placement_blockage
-
 create_route_blockage
-
 create_keepout_margin
-
 shape_blocks
-
 report_floorplan
 ```
 
@@ -161,7 +153,6 @@ report_floorplan
 
 ```tcl
 check_floorplan
-
 report_utilization
 ```
 
@@ -169,11 +160,8 @@ report_utilization
 
 ```tcl
 create_pg_ring
-
 create_pg_mesh
-
 create_pg_std_cell_conn_pattern
-
 compile_pg
 ```
 
@@ -181,7 +169,6 @@ compile_pg
 
 ```tcl
 check_pg_connectivity
-
 report_pg
 ```
 
@@ -198,13 +185,9 @@ legalize_placement
 
 ```tcl
 place_opt -from initial_place
-
 place_opt -from initial_drc
-
 place_opt -from initial_opto
-
 place_opt -from final_place
-
 place_opt -from final_opto
 ```
 
@@ -212,9 +195,7 @@ place_opt -from final_opto
 
 ```tcl
 check_legality
-
 report_congestion
-
 report_utilization
 ```
 
@@ -222,7 +203,6 @@ report_utilization
 
 ```tcl
 report_net_fanout
-
 all_high_fanout
 ```
 
@@ -236,11 +216,8 @@ clock_opt
 
 ```tcl
 check_clock_trees
-
 report_clock_tree
-
 report_clock_timing
-
 report_clock_qor
 ```
 
@@ -288,7 +265,6 @@ route_opt
 
 ```tcl
 report_route_status
-
 report_routing_rules
 ```
 
@@ -303,16 +279,10 @@ report_timing
 ### Timing Command Examples
 
 ```tcl
-report_timing
-
 report_timing -max_paths 10
-
 report_timing -delay max
-
 report_timing -delay min
-
 report_timing -nets
-
 report_timing -transition_time
 ```
 
@@ -322,15 +292,10 @@ Timing reports help identify setup/hold violations and optimization opportunitie
 
 ```tcl
 report_qor
-
 report_constraint
-
 report_global_timing
-
 report_clock_timing
-
 report_power
-
 report_area
 ```
 
@@ -338,7 +303,6 @@ report_area
 
 ```tcl
 report_congestion
-
 report_congestion -grid
 ```
 
@@ -346,11 +310,8 @@ report_congestion -grid
 
 ```tcl
 check_routes
-
 check_legality
-
 check_design
-
 check_physical_constraints
 ```
 
@@ -358,15 +319,10 @@ check_physical_constraints
 
 ```tcl
 eco_opt
-
 add_buffer
-
 insert_buffer
-
 remove_buffer
-
 size_cell
-
 change_link
 ```
 
@@ -374,31 +330,18 @@ change_link
 
 ```tcl
 report_design
-
 report_cell
-
 report_net
-
 report_port
-
 report_pin
-
 report_power
-
 report_area
-
 report_clock_tree
-
 report_qor
-
 report_constraint
-
 report_utilization
-
 report_congestion
-
 report_timing
-
 report_clock_timing
 ```
 
@@ -420,9 +363,7 @@ sizeof_collection [get_cells]
 
 ```tcl
 get_cells -filter "is_sequential==true"
-
 get_cells -filter "is_hard_macro==true"
-
 get_cells -filter "physical_status==fixed"
 ```
 
@@ -430,15 +371,10 @@ get_cells -filter "physical_status==fixed"
 
 ```tcl
 all_inputs
-
 all_outputs
-
 all_registers
-
 all_clocks
-
 current_design
-
 current_block
 ```
 
@@ -446,13 +382,9 @@ current_block
 
 ```tcl
 start_gui
-
 gui_zoom
-
 gui_fit
-
 change_selection
-
 highlight_objects
 ```
 
@@ -480,9 +412,7 @@ change_selection [get_pins U123/A]
 
 ```tcl
 create_routing_rule
-
 set_clock_routing_rules
-
 report_routing_rules
 ```
 
@@ -490,11 +420,8 @@ report_routing_rules
 
 ```tcl
 create_routing_rule
-
 set_clock_routing_rules
-
 remove_routing_rules
-
 report_routing_rules
 ```
 
@@ -502,21 +429,13 @@ report_routing_rules
 
 ```tcl
 get_cells
-
 get_nets
-
 get_ports
-
 get_pins
-
 get_lib_cells
-
 get_lib_pins
-
 get_clocks
-
 get_layers
-
 get_vias
 ```
 
@@ -524,23 +443,14 @@ get_vias
 
 ```tcl
 bbox
-
 width
-
 height
-
 area
-
 physical_status
-
 is_sequential
-
 is_hard_macro
-
 is_soft_macro
-
 is_clock
-
 pin_count
 ```
 
