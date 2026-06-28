@@ -1,4 +1,4 @@
-# ICC2 Commands used in Physical Design
+# PD ICC2 Commands
 
 These ICC2 commands are most commonly used during implementation, debugging, timing closure. 
 
