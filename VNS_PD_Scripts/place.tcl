@@ -9,7 +9,6 @@
 # ---------------------------------------------
 # Utility: Safe mkdir
 # ---------------------------------------------
-
 proc safe_mkdir {dir} {
     if {![file exists $dir]} {
         file mkdir $dir
@@ -22,7 +21,6 @@ safe_mkdir ./reports/PRE_PLACEMENT
 # ---------------------------------------------
 # PRE-PLACEMENT CHECKS
 # ---------------------------------------------
-
 proc pre_placement_checks {} {
     set rpt_dir ./reports/PRE_PLACEMENT
     redirect $rpt_dir/pg_checks.rpt {

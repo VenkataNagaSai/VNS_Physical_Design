@@ -1,7 +1,7 @@
 # ---------------------------------------------
-# ICC2   : ROUTING Automated Script
+# ICC2   : Routing Automated Script
 # Tool   : Synopsys IC Compiler II (ICC2)
-# Stage  : ROUTING
+# Stage  : Routing
 # Date   : 22-06-2026
 # Author : Ravula Venkata Naga Sai
 # ---------------------------------------------
@@ -11,9 +11,10 @@
 ################################################
 puts "INFO: Routing stage started..."
 
-# ---------------------------------------------
-# Pre-routing checks
-# ---------------------------------------------
+################################################
+# PRE ROUTING CHECKS 
+################################################
+
 set rpt_dir "./reports/PRE_ROUTE"
 
 # ---------------------------------------------
@@ -27,13 +28,13 @@ if {![file exists $rpt_dir]} {
 }
 
 # ---------------------------------------------
-# Routability check
+# Routability Check
 # ---------------------------------------------
 puts "INFO: Running check_routability..."
 check_routability > $rpt_dir/routability.rpt
 
 # ---------------------------------------------
-# Pre-route design checks
+# Pre-route Design Checks
 # ---------------------------------------------
 puts "INFO: Running pre-route design checks..."
 check_design -check pre_route_stage > $rpt_dir/pre_route_design_check.rpt
@@ -88,11 +89,11 @@ route_auto \
     -save_after_detail_route true
 
 # ---------------------------------------------
-# Routing optimization
+# Routing Optimization
 # ---------------------------------------------
 route_opt
 # ---------------------------------------------
-# Save block
+# Save Route Block
 # ---------------------------------------------
 save_block -as route_opt_done
 puts "INFO: Routing stage completed successfully"
@@ -113,7 +114,7 @@ if {![file exists $rpt_dir]} {
 }
 
 # ---------------------------------------------
-# Power / Ground checks
+# Power / Ground Checks
 # ---------------------------------------------
 puts "INFO: Running PG connectivity check..."
 check_pg_connectivity  > $rpt_dir/pg_connectivity.rpt
@@ -123,13 +124,13 @@ puts "INFO: Running PG DRC check..."
 check_pg_drc > $rpt_dir/pg_drc.rpt
 
 # ---------------------------------------------
-# Routing checks
+# Routing Checks
 # ---------------------------------------------
 puts "INFO: Running routing check..."
 check_routes > $rpt_dir/route_check.rpt
 
 # ---------------------------------------------
-# LVS check
+# LVS Check
 # ---------------------------------------------
 puts "INFO: Running LVS check..."
 check_lvs -max_error 0 > $rpt_dir/lvs.rpt

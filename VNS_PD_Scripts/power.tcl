@@ -1,7 +1,7 @@
 # ----------------------------------------------
-# ICC2   : Power Planning Automated Script
+# ICC2   : Powerplan Automated Script
 # Tool   : Synopsys IC Compiler II (ICC2)
-# Stage  : Power Planning
+# Stage  : Powerplan
 # Date   : 22-06-2026
 # Author : Ravula Venkata Naga Sai
 # ----------------------------------------------
@@ -51,7 +51,6 @@ set hm(risc_core) [get_flat_cells -filter "is_hard_macro" I_RISC_CORE/*]
 # macros which belong to PD_ORCA_TOP power domain
 set hm(top) [remove_from_collection $all_macros $hm(risc_core)]
 
-# ----------------------------------------------
 ############## Create pattern, strategy for higher straps M7, M8 #############
 
 create_pg_mesh_pattern P_top_two \
@@ -165,7 +164,7 @@ compile_pg -strategies \
     {MACRO_RING_VDD_STRAGEY MACRO_RING_VDDH_STRAGEY} \
     -via_rule S_ring_vias
 
-########### create pattern, strategies and compile for macropins ############
+########### create pattern, strategies and compile for macropins ###########
 
 create_pg_macro_conn_pattern P_HM_pin \
     -pin_conn_type scattered_pin \
