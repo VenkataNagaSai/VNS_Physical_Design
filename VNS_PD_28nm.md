@@ -388,10 +388,10 @@ Resolve setup, hold, transition, and capacitance violations using structured tim
 Logical classification of timing paths to enable focused optimization.
 
 **Common Path Groups**
-- Input → Register  
-- Register → Register  
-- Register → Output  
-- Clock → Register  
+- Input to Register  
+- Register to Register  
+- Register to Output  
+- Clock to Register  
 
 **Why Used**
 - Prioritizes critical paths
@@ -492,7 +492,7 @@ Defines physical placement regions to control cell distribution.
 ASIC Physical Design Engineer  
 
 **Expertise:**  
-Nelist → GDSII | ICC2 | PrimeTime  
+Nelist to GDSII | ICC2 | PrimeTime  
 
 ## Disclaimer
 
