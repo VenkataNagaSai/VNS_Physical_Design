@@ -1,5 +1,65 @@
 # Physical Design Implementation (Netlist → GDSII) and Automation of a Single Core 32 Bit RISC Processor on 28nm Technology
 
+## 📑 Table of Contents
+
+- [📌 Project Overview](#-project-overview)
+- [🎯 Project Objectives](#-project-objectives)
+- [🛠 Tools & Technology](#-tools--technology)
+- [🧩 Physical Design Flow (Stage-wise Automation)](#-physical-design-flow-stage-wise-automation)
+  - [✅ Stage 1: Import Design](#-stage-1-import-design)
+    - [Import Design Objective](#import-design-objective)
+    - [Import Design Automated Tasks](#import-design-automated-tasks)
+    - [Import Design Generated Outputs](#-import-design-generated-outputs)
+  - [✅ Stage 2: Floorplan](#-stage-2-floorplan)
+    - [Floorplan Objective](#floorplan-objective)
+    - [Floorplan Automated Tasks](#floorplan-automated-tasks)
+    - [Floorplan Generated Outputs](#-floorplan-generated-outputs)
+  - [🔌 Stage 3: Powerplan](#-stage-3-powerplan)
+    - [Powerplan Objective](#powerplan-objective)
+    - [Powerplan Automated Tasks](#powerplan-automated-tasks)
+    - [Powerplan Key Power Structures Implemented](#powerplan-key-power-structures-implemented)
+    - [Powerplan Key Checks & Reports](#powerplan-key-checks--reports)
+    - [Powerplan Generated Outputs](#powerplan-generated-outputs)
+  - [📐 Stage 4: Placement](#-stage-4-placement)
+    - [Placement Objective](#placement-objective)
+    - [Placement Automated Tasks](#placement-automated-tasks)
+    - [Placement Key Checks & Reports](#placement-key-checks--reports)
+    - [Placement Generated Outputs](#placement-generated-outputs)
+  - [⏱️ Stage 5: Clock Tree Synthesis (CTS)](#️-stage-5-clock-tree-synthesis-cts)
+    - [CTS Objective](#cts-objective)
+    - [CTS Automated Tasks](#cts-automated-tasks)
+    - [CTS Key Constraints & Strategies](#cts-key-constraints--strategies)
+    - [CTS Key Checks & Reports](#cts-key-checks--reports)
+    - [CTS Generated Outputs](#cts-generated-outputs)
+  - [🧵 Stage 6: Routing](#-stage-6-routing)
+    - [Routing Objective](#routing-objective)
+    - [Routing Automated Tasks](#routing-automated-tasks)
+    - [Routing Strategies](#routing-strategies)
+    - [Routing Key Checks & Reports](#routing-key-checks--reports)
+      - [Pre-Routing Checks](#pre-routing-checks)
+      - [Post-Routing Checks](#post-routing-checks)
+    - [Routing Common Violations Handled](#routing-common-violations-handled)
+    - [Routing Debug & Fix Methodology](#routing-debug--fix-methodology)
+    - [Routing Generated Outputs](#routing-generated-outputs)
+  - [🛠️ Stage 7: Timing Optimization & ECO Fixes](#️-stage-7-timing-optimization--eco-fixes)
+    - [Timing Optimization & ECO Fixes Objective](#timing-optimization--eco-fixes-objective)
+    - [Timing Optimization and ECO Fixes Scope](#timing-optimization-and-eco-fixes-scope)
+    - [Timing Optimization Techniques Used](#timing-optimization-techniques-used)
+      - [Group Path Optimization](#group-path-optimization)
+      - [Magnet Placement](#magnet-placement)
+      - [Bound (Region) Creation](#bound-region-creation)
+    - [CTS-Level Fixes (Skew & Hold)](#cts-level-fixes-skew--hold)
+      - [Hold Violation Resolution](#hold-violation-resolution)
+    - [Electrical Violation Fixes](#electrical-violation-fixes)
+      - [Transition Violations](#transition-violations)
+      - [Capacitance Violations](#capacitance-violations)
+      - [Long Net Optimization](#long-net-optimization)
+    - [ECO Automation Highlights](#eco-automation-highlights)
+    - [Timing Optimization & ECO Fixes Key Checks & Reports](#timing-optimization--eco-fixes-key-checks--reports)
+    - [Timing Optimization & ECO Fixes Generated Outputs](#timing-optimization--eco-fixes-generated-outputs)
+- [👤 Author](#-author)
+- [⚠️ Disclaimer](#-disclaimer)
+
 ## 📌 Project Overview
 
 This is a stage-wise **Physical Design Implementation and automation project** developed using **Synopsys IC Compiler II (ICC2)**.  
@@ -11,16 +71,12 @@ The project is organized to reflect **production-level Physical Design practices
 - Properly validated
 - Version-controlled
 
----
-
 ## 🎯 Project Objectives
 
 - Automate the complete **Physical Design flow** using ICC2 TCL scripts  
 - Follow **industry-standard directory organization**
 - Enable **stage-level execution and debugging**
 - Demonstrate awareness of **timing, power, and physical integrity**
-
----
 
 ## 🛠 Tools & Technology
 
@@ -34,16 +90,14 @@ The project is organized to reflect **production-level Physical Design practices
 | Flow | Netlist → GDSII |
 | Scripting Language | TCL |
 
----
-
 ## 🧩 Physical Design Flow (Stage-wise Automation)
 
-### ✅ Stage 1: Import Design 
+## ✅ Stage 1: Import Design 
 
-#### Objective  
+### Import Design Objective  
 Create a clean ICC2 environment and import the design with all required dependencies.
 
-#### Automated Tasks
+### Import Design Automated Tasks
 - Search path configuration  
 - Reference NDM libraries (RVT / HVT / LVT / SRAM)  
 - Working library creation  
@@ -53,17 +107,19 @@ Create a clean ICC2 environment and import the design with all required dependen
 - Scan DEF import  
 - UPF (power intent) loading and commit  
 - Initial design sanity checks  
-- Report generation  
-- Save design as **import_design** block  
 
-📁 script location: `vns_pd_scripts/import_design.tcl`
+## 📦 Import Design Generated Outputs
+- Global Timing, Scan Chain, Design Mismatch, Multivolatge Design Report generation  
+- Import design block
 
-##  ✅  Stage 2: Floorplan 
+📁 **Script Location:** [`VNS_PD_Scripts/import_design.tcl`](VNS_PD_Scripts/import_design.tcl)
 
-#### Objective
+## ✅ Stage 2: Floorplan 
+
+### Floorplan Objective
 Define the physical boundaries of the design by creating the core and die area, placing ports and macros, defining voltage regions, and preparing the design for placement and routing.
 
-#### Automated Tasks
+### Floorplan Automated Tasks
 - Open imported design database and create floorplan block
 - Core and die area definition using utilization, offset, and shape
 - Floorplan initialization with site rows
@@ -80,7 +136,7 @@ Define the physical boundaries of the design by creating the core and die area, 
 - Physical design sanity checks
 - Save floorplan block for next PD stage
 
-## 📦 Generated Outputs
+## 📦 Floorplan Generated Outputs
 - Floorplan design block (floorplan)
 - Congestion report
 - Boundary cell report
@@ -88,14 +144,14 @@ Define the physical boundaries of the design by creating the core and die area, 
 - Physical constraint report
 - Pin placement report
   
-📁 script location: `vns_pd_scripts/fp.tcl`
+📁 **Script Location:** [`VNS_PD_Scripts/fp.tcl`](VNS_PD_Scripts/fp.tcl)
 
-## 🔌 Stage 3: Power Planning 
+## 🔌 Stage 3: Powerplan 
 
-### Objective
+### Powerplan Objective
 Implement a robust and DRC-clean power delivery network by creating power meshes, straps, rings, and standard cell rails to ensure reliable power integrity across all voltage domains.
 
-### Automated Tasks
+### Powerplan Automated Tasks
 - Sanity check for power and ground nets (VDD / VSS / VDDH)
 - Open floorplan database and create power planning block
 - Removal of existing PG strategies, patterns, regions, and routes
@@ -112,31 +168,31 @@ Implement a robust and DRC-clean power delivery network by creating power meshes
 - PG connectivity, missing via, and DRC checks
 - Save power-planned design block for next PD stage
 
-### Key Power Structures Implemented
+### Powerplan Key Power Structures Implemented
 - **M7 & M8** : Global power mesh  
 - **M2** : Local power straps  
 - **M5 & M6** : Macro power rings  
 - **M1** : Standard cell power rails  
 
-### Key Checks & Reports
+### Powerplan Key Checks & Reports
 - Power connectivity check  
 - Missing PG via check  
 - Power DRC verification  
 
-### Generated Outputs
+### Powerplan Generated Outputs
 - Power-planned design block (`powerplan`)
 - Power connectivity report
 - Missing via report
 - Power DRC report
 
-📁 script location: `vns_pd_scripts/power.tcl`
+📁 **Script Location:** [`VNS_PD_Scripts/power.tcl`](VNS_PD_Scripts/power.tcl)
 
 ## 📐 Stage 4: Placement 
 
-### Objective
+### Placement Objective
 Place and optimize standard cells while meeting timing, congestion, and physical constraints, ensuring a legal and high-quality placement ready for Clock Tree Synthesis (CTS).
 
-### Automated Tasks
+### Placement Automated Tasks
 - Creation of report directories for placement stages
 - Pre-placement sanity checks:
   - Power connectivity verification
@@ -161,7 +217,7 @@ Place and optimize standard cells while meeting timing, congestion, and physical
 - Cell insertion analysis (buffers, inverters)
 - Design block save at each major placement milestone
 
-### Key Checks & Reports
+### Placement Key Checks & Reports
 - Power connectivity and PG DRC checks
 - Multi-voltage design checks
 - Placement legality verification
@@ -171,7 +227,7 @@ Place and optimize standard cells while meeting timing, congestion, and physical
 - High fanout net analysis
 - Constraint violation reports
 
-### Generated Outputs
+### Placement Generated Outputs
 - Rough legalized placement block  
 - Initial DRC placement block  
 - Initial optimization placement block  
@@ -179,14 +235,14 @@ Place and optimize standard cells while meeting timing, congestion, and physical
 - Final optimization placement block  
 - Detailed placement and QoR reports  
 
-📁 script location: `vns_pd_scripts/place.tcl`
+📁 **Script Location:** [`VNS_PD_Scripts/place.tcl`](VNS_PD_Scripts/place.tcl)
 
 ## ⏱️ Stage 5: Clock Tree Synthesis (CTS)
 
-### Objective
+### CTS Objective
 Build and optimize a balanced and low-skew clock distribution network that meets timing, transition, and signal integrity requirements across all operating corners and scenarios.
 
-### Automated Tasks
+### CTS Automated Tasks
 - Pre-CTS sanity checks and design validation
 - Clock tree integrity and design consistency checks
 - Derivation of clock cell reference list
@@ -210,7 +266,7 @@ Build and optimize a balanced and low-skew clock distribution network that meets
 - Final CTS optimization and cleanup
 - Save design block at each CTS milestone
 
-### Key Constraints & Strategies
+### CTS Key Constraints & Strategies
 - Target skew defined per corner
 - Max clock transition limits enforced
 - Scenario-based clock uncertainty
@@ -218,7 +274,7 @@ Build and optimize a balanced and low-skew clock distribution network that meets
 - Controlled CTS and hold-fixing cell usage
 - CRPR enabled for accurate timing analysis
 
-### Key Checks & Reports
+### CTS Key Checks & Reports
 - Global timing report (post-CTS)
 - Clock latency reports (per scenario)
 - Clock DRC violation report
@@ -226,20 +282,20 @@ Build and optimize a balanced and low-skew clock distribution network that meets
 - Maximum transition violation report
 - Maximum capacitance violation report
 
-### Generated Outputs
+### CTS Generated Outputs
 - CTS build block (`build_clock_done`)
 - CTS routed block (`route_clock_done`)
 - Final CTS optimized block (`final_clock_opt_done`)
 - Comprehensive CTS QoR reports
 
-📁 script location: `vns_pd_scripts/cts.tcl`
+📁 **Script Location:** [`VNS_PD_Scripts/cts.tcl`](VNS_PD_Scripts/cts.tcl)
 
 ## 🧵 Stage 6: Routing 
 
-### Objective
+### Routing Objective
 Perform timing-driven and signal-integrity-aware routing to achieve a fully connected, DRC-clean, and LVS-clean layout while preserving timing and power integrity.
 
-### Automated Tasks
+### Routing Automated Tasks
 - Pre-routing design and routability checks
 - Pre-route design consistency verification
 - Enable timing-driven routing at global, track, and detail levels
@@ -262,7 +318,7 @@ Perform timing-driven and signal-integrity-aware routing to achieve a fully conn
 - Increased routing iterations for improved DRC convergence
 - ECO-based routing for localized fixes
 
-### Key Checks & Reports
+### Routing Key Checks & Reports
 
 #### Pre-Routing Checks
 - Routability check
@@ -275,7 +331,7 @@ Perform timing-driven and signal-integrity-aware routing to achieve a fully conn
 - Routing DRC check
 - LVS check (zero-error tolerance)
 
-### Common Violations Handled
+### Routing Common Violations Handled
 - Metal shorts (same-net and different-net)
 - Minimum spacing violations
 - Minimum metal width and area violations
@@ -283,7 +339,7 @@ Perform timing-driven and signal-integrity-aware routing to achieve a fully conn
 - Routing over restricted macro layers
 - Missing vias in power and signal nets
 
-### Debug & Fix Methodology
+### Routing Debug & Fix Methodology
 - Manual GUI-based fixes for limited violations:
   - Metal stretching
   - Via replacement
@@ -292,21 +348,21 @@ Perform timing-driven and signal-integrity-aware routing to achieve a fully conn
 - ECO routing for targeted net-level LVS fixes
 - Higher metal layer (M7) usage to avoid macro-level shorts
 
-### Generated Outputs
+### Routing Generated Outputs
 - Routed and optimized design block (`route_opt_done`)
 - Pre-route check reports
 - Post-route DRC reports
 - PG connectivity reports
 - LVS report (zero errors)
 
-📁 script location: `vns_pd_scripts/route.tcl`
+📁 **Script Location:** [`VNS_PD_Scripts/route.tcl`](VNS_PD_Scripts/route.tcl)
 
 ## 🛠️ Stage 7: Timing Optimization & ECO Fixes 
 
-### Objective
+### Timing Optimization & ECO Fixes Objective
 Resolve setup, hold, transition, and capacitance violations using structured timing analysis, path-based optimization, and ECO-friendly Physical Design techniques across placement and CTS stages.
 
-### Optimization Scope
+### Timing Optimization and ECO Fixes Scope
 - Pre-placement & placement timing optimization
 - CTS skew and hold violation fixing
 - Post-CTS electrical violation cleanup
@@ -393,29 +449,28 @@ Defines physical placement regions to control cell distribution.
 - Incremental legalization after ECO
 - Minimal disturbance to clean timing paths
 
-### Key Checks & Reports
+### Timing Optimization & ECO Fixes Key Checks & Reports
 - Setup & hold timing reports
 - Clock skew analysis
 - Max transition violation report
 - Max capacitance violation report
 - Post-ECO timing verification
 
-### Generated Outputs
+### Timing Optimization & ECO Fixes Generated Outputs
 - ECO-fixed placement database
 - Updated CTS timing reports
 - Electrical violation reports
 - Incrementally legalized design block
 
-📁 script location:  `vns_pd_scripts/hook/`
-├── `group_path.tcl`
-├── `magnet_placement.tcl`
-├── `bound_creation.tcl`
-├── `cts_hold_fix.tcl`
-├── `vt_swap.tcl`
-├── `cap_upsizing.tcl`
-├── `buffer_insertion.tcl`
+📁 **Script Location:** [`VNS_PD_Scripts/hook`](VNS_PD_Scripts/hook)
 
----
+- [`group_path.tcl`](VNS_PD_Scripts/hook/group_path.tcl)
+- [`magnet_placement.tcl`](VNS_PD_Scripts/hook/magnet_placement.tcl)
+- [`bound_creation.tcl`](VNS_PD_Scripts/hook/bound_creation.tcl)
+- [`cts_hold_fix.tcl`](VNS_PD_Scripts/hook/cts_hold_fix.tcl)
+- [`vt_swap.tcl`](VNS_PD_Scripts/hook/vt_swap.tcl)
+- [`cap_upsizing.tcl`](VNS_PD_Scripts/hook/cap_upsizing.tcl)
+- [`buffer_insertion.tcl`](VNS_PD_Scripts/hook/buffer_insertion.tcl)
 
 ## 👤 Author
 
@@ -425,12 +480,9 @@ ASIC Physical Design Engineer
 **Expertise:**  
 Nelist → GDSII | ICC2 | PrimeTime  
 
----
-
 ## ⚠️ Disclaimer
 
 This project is intended **strictly for learning and demonstration purposes**.  
 All scripts are **generic and reusable**.  
 Tool-generated databases and proprietary data are **intentionally excluded**.
 
----
